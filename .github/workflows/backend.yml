@@ -1,0 +1,46 @@
+name: Deploy Backend to AWS
+
+on:
+  push:
+    branches:
+      - dev
+      - master
+    paths:
+      - "next_backend/**" # 只有当后端代码改变时才触发
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: ./next_backend
+        run: npm install
+
+      - name: Build
+        working-directory: ./next_backend
+        run: npm run build
+
+      - name: Install SSH key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/webssh.pem
+          chmod 600 ~/.ssh/webssh.pem
+          ssh-keyscan -H ec2-16-170-226-198.eu-north-1.compute.amazonaws.com >> ~/.ssh/known_hosts
+
+      - name: Deploy Backend to AWS
+        run: |
+          rsync -avz -e "ssh -i ~/.ssh/webssh.pem" --delete ./next_backend/dist/ ubuntu@ec2-16-170-226-198.eu-north-1.compute.amazonaws.com:/var/www/backend/
+          rsync -avz -e "ssh -i ~/.ssh/webssh.pem" ./next_backend/package.json ./next_backend/package-lock.json ubuntu@ec2-16-170-226-198.eu-north-1.compute.amazonaws.com:/var/www/backend/
+          ssh -i ~/.ssh/webssh.pem ubuntu@ec2-16-170-226-198.eu-north-1.compute.amazonaws.com 'cd /var/www/backend && npm install --production && pm2 restart all'
