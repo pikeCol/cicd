@@ -29,10 +29,19 @@ jobs:
       - name: Install SSH key
         run: |
           mkdir -p ~/.ssh/
-          echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/webssh.pem
+          echo "${{ secrets.AWS_SSH_KEY }}" | tr -d '\r' > ~/.ssh/webssh.pem
           chmod 600 ~/.ssh/webssh.pem
           ssh-keyscan -H ec2-16-170-226-198.eu-north-1.compute.amazonaws.com >> ~/.ssh/known_hosts
+
+      - name: Set directory permissions
+        run: |
+          ssh -i ~/.ssh/webssh.pem ubuntu@ec2-16-170-226-198.eu-north-1.compute.amazonaws.com 'sudo chown -R ubuntu:ubuntu /usr/share/nginx/html/'
 
       - name: Deploy to AWS
         run: |
           rsync -avz -e "ssh -i ~/.ssh/webssh.pem" --delete ./build/ ubuntu@ec2-16-170-226-198.eu-north-1.compute.amazonaws.com:/usr/share/nginx/html/
+
+      - name: Reset directory permissions
+        if: always()
+        run: |
+          ssh -i ~/.ssh/webssh.pem ubuntu@ec2-16-170-226-198.eu-north-1.compute.amazonaws.com 'sudo chown -R nginx:nginx /usr/share/nginx/html/'
