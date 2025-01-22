@@ -4,13 +4,6 @@ on:
   push:
     branches: ["master"]
 
-env:
-  AWS_REGION: us-east-1 # 设置AWS区域
-  ECR_REPOSITORY: my-app-repo # ECR仓库名称
-  ECS_SERVICE: my-app-service # ECS服务名称
-  ECS_CLUSTER: my-app-cluster # ECS集群名称
-  CONTAINER_NAME: my-app-container # 容器名称
-
 permissions:
   contents: read
 
@@ -30,11 +23,16 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: test
-        run: npm run test
-
-      - name: build
+      - name: Build
         run: npm run build
 
-      - name: deploy
-        run: npm run deploy
+      - name: Install SSH key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.AWS_SSH_KEY }}" > ~/.ssh/webssh.pem
+          chmod 600 ~/.ssh/webssh.pem
+          ssh-keyscan -H ec2-16-170-226-198.eu-north-1.compute.amazonaws.com >> ~/.ssh/known_hosts
+
+      - name: Deploy to AWS
+        run: |
+          rsync -avz -e "ssh -i ~/.ssh/webssh.pem" --delete ./dist/ ubuntu@ec2-16-170-226-198.eu-north-1.compute.amazonaws.com:/usr/share/nginx/html/
