@@ -41,5 +41,5 @@ jobs:
 
       - name: Deploy Backend to AWS
         run: |
-          rsync -avz -e "ssh -i ~/.ssh/webssh.pem" --delete ./next_backend/dist/ ubuntu@ec2-16-170-226-198.eu-north-1.compute.amazonaws.com:/var/www/backend/
+          rsync -avz -e "ssh -i ~/.ssh/webssh.pem" --delete --exclude 'node_modules' ./next_backend/ ubuntu@ec2-16-170-226-198.eu-north-1.compute.amazonaws.com:/var/www/backend/
           ssh -i ~/.ssh/webssh.pem ubuntu@ec2-16-170-226-198.eu-north-1.compute.amazonaws.com 'cd /var/www/backend && npm install && pm2 restart all'
