@@ -18,18 +18,13 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: latest
+          node-version: 20
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
 
       - name: Build
-        run: pnpm run build
+        run: npm run build
 
       - name: Install SSH key
         run: |
@@ -40,4 +35,4 @@ jobs:
 
       - name: Deploy to AWS
         run: |
-          rsync -avz -e "ssh -i ~/.ssh/webssh.pem" --delete ./dist/ ubuntu@ec2-16-170-226-198.eu-north-1.compute.amazonaws.com:/usr/share/nginx/html/
+          rsync -avz --delete ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/usr/share/nginx/html/
