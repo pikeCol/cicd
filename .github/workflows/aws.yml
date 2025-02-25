@@ -41,4 +41,4 @@ jobs:
 
       - name: Deploy to AWS
         run: |
-          rsync -avz -e "ssh -i ~/.ssh/webssh.pem" --delete /Frontend/build/ ubuntu@ec2-13-48-158-17.eu-north-1.compute.amazonaws.com:/var/www/html/
+          rsync -avz -e "ssh -i ~/.ssh/webssh.pem" --delete /Frontend/dist/ ubuntu@ec2-13-48-158-17.eu-north-1.compute.amazonaws.com:/var/www/html/
