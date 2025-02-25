@@ -6,7 +6,7 @@ on:
       - dev
       - master
     paths:
-      - "next_backend/**" # 只有当后端代码改变时才触发
+      - "backend/**" # 只有当后端代码改变时才触发
 
 permissions:
   contents: read
@@ -25,11 +25,11 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        working-directory: ./next_backend
+        working-directory: ./backend
         run: npm install
 
       - name: Build
-        working-directory: ./next_backend
+        working-directory: ./backend
         run: npm run build
 
       - name: Install SSH key
@@ -41,5 +41,5 @@ jobs:
 
       - name: Deploy Backend to AWS
         run: |
-          rsync -avz -e "ssh -i ~/.ssh/webssh.pem" --delete --exclude 'node_modules' ./next_backend/ ubuntu@ec2-16-170-226-198.eu-north-1.compute.amazonaws.com:/var/www/backend/
+          rsync -avz -e "ssh -i ~/.ssh/webssh.pem" --delete --exclude 'node_modules' ./backend/ ubuntu@ec2-16-170-226-198.eu-north-1.compute.amazonaws.com:/var/www/backend/
           ssh -i ~/.ssh/webssh.pem ubuntu@ec2-16-170-226-198.eu-north-1.compute.amazonaws.com 'cd /var/www/backend && npm install && pm2 restart all'
