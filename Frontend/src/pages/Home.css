@@ -1,0 +1,23 @@
+.home-container {
+    background-color: blueviolet;
+    color: white;
+    text-align: center;
+    padding: 50px;
+}
+
+.home-header {
+    margin-bottom: 20px
+}
+
+.herosection {
+    position: relative;
+  }
+
+button {
+    background-color: white;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    border: none;
+    color: black;
+    cursor: pointer;
+}
