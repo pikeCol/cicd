@@ -1,0 +1,177 @@
+.signcontainer {
+  display: flex;
+  height: calc(100vh - 88.2px); /*excludes header space now*/
+  width: 100vw;
+  margin-left: 0;
+  padding-left: 0%;
+  font-family: "Newake";
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #10002b;
+  font-size: 1.2rem;
+  padding-top: 0%;
+  margin-top: 88.2px;
+}
+
+.signinform {
+  background-color: #cdacd1;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  padding-top: auto;
+  box-shadow: 0px 4px 8px rgba(193, 100, 223, 1);
+}
+
+.signupform {
+  background-color: #cdacd1;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  padding-top: auto;
+  box-shadow: 0px 4px 8px rgba(193, 100, 223, 1);
+  margin-left: auto;
+}
+
+.options {
+  display: flex;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  justify-content: space-between;
+  white-space: nowrap;
+}
+
+.forgor {
+  text-align: right;
+}
+
+.bottomtext {
+  text-align: center;
+  margin-top: auto;
+}
+
+.bottomtext a {
+  transition: transform 0.2s ease;
+  &:hover {
+    color: #4600af;
+  }
+}
+
+.signcontainer form {
+  width: 100%;
+  max-width: 400px;
+}
+
+.signcontainer label {
+  display: block;
+  margin-bottom: 10px;
+  margin-right: auto;
+  text-align: left;
+}
+
+.signcontainer input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 30px;
+  background-color: white;
+  color: #10002b;
+  box-sizing: border-box;
+  border-radius: 30px;
+  border: 1px solid #ccc;
+}
+
+.options input[type="checkbox"] {
+  accent-color: #ffb96a;
+  color: white;
+  width: auto;
+  margin-right: 10px;
+  margin-top: auto;
+}
+
+.signcontainer button {
+  background-color: #ffb96a;
+  color: #2d004d;
+  border: none;
+  margin-left: auto;
+  border-radius: 30px;
+  font-weight: bold;
+  font-family: "Newake";
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.signcontainer p {
+  text-align: center;
+  margin-top: 20px;
+  color: #10002b;
+}
+
+.signcontainer h1 {
+  margin-top: auto;
+  padding-top: 50px;
+}
+
+.signcontainer a {
+  text-decoration: underline;
+  color: #460088;
+  transition: transform 0.2s ease;
+  &:hover {
+    color: #4600af;
+  }
+}
+
+.formWrapper {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 2px solid #10002b;
+  border-radius: 5px;
+}
+
+.altLoginDivider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.altLoginDivider::before,
+.altLoginDivider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 2px solid #2d004d;
+  margin: 0 10px;
+}
+
+.altLoginDivider::before {
+  margin-left: -250%;
+}
+
+.altLoginDivider::after {
+  margin-right: -250%;
+}
+
+.altLoginDivider span {
+  font-size: 1.35rem;
+}
+
+.spotifyButton button {
+  display: flex;
+  background-color: #1ed760;
+  color: white;
+  align-items: center;
+}
+
+.spotifyButton img {
+  max-height: 40px;
+}
