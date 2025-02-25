@@ -5,6 +5,8 @@ on:
     branches:
       - dev
       - master
+    paths:
+      - "Frontend/**"
 
 permissions:
   contents: read
@@ -23,9 +25,11 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
+        working-directory: ./Frontend
         run: npm install
 
       - name: Build
+        working-directory: ./Frontend
         run: npm run build
 
       - name: Install SSH key
@@ -37,4 +41,4 @@ jobs:
 
       - name: Deploy to AWS
         run: |
-          rsync -avz -e "ssh -i ~/.ssh/webssh.pem" --delete ./build/ ubuntu@ec2-16-170-226-198.eu-north-1.compute.amazonaws.com:/var/www/html/
+          rsync -avz -e "ssh -i ~/.ssh/webssh.pem" --delete ./Frontend/build/ ubuntu@ec2-16-170-226-198.eu-north-1.compute.amazonaws.com:/var/www/html/
