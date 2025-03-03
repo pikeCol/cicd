@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { PlaylistProcessingController } from './playlist-processing.controller';
 import { PlaylistProcessingService } from './playlist-processing.service';
-import { CrawlerService } from './crawler/crawler.service';
+import { CrawlerService } from '../common/crawler/crawler.service';
 
 
 @Module({

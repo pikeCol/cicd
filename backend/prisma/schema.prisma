@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  extensions = [uuid_ossp]
+}
+
+enum Provider {
+  local
+  spotify
+}
+
+model User {
+  id                   String    @id @default(uuid())
+  username             String?   @unique
+  password             String?
+  spotifyId            String?   @unique
+  email                String?   @unique
+  spotifyAccessToken   String?
+  spotifyRefreshToken  String?
+  provider             Provider  @default(local)
+  playlists            Playlist[]
+}
+
+model Playlist {
+  id        String          @id @default(uuid())
+  name      String?
+  user      User            @relation(fields: [userId], references: [id])
+  userId    String
+  songs     PlaylistSong[]
+}
+
+model Song {
+  id             String          @id @default(uuid())
+  title          String
+  artist         String
+  hyperlink      String
+  playlistSongs  PlaylistSong[]
+}
+
+model PlaylistSong {
+  id         String   @id @default(uuid())
+  playlist   Playlist @relation(fields: [playlistId], references: [id])
+  playlistId String
+  song       Song     @relation(fields: [songId], references: [id])
+  songId     String
+  ranking    Int
+}

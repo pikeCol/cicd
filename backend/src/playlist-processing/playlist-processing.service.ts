@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreationRequestDTO } from './dto/creation-request.dto';
 import { CreationResponseDTO } from './dto/creation-response.dto';
-import { CrawlerService } from './crawler/crawler.service';
+import { CrawlerService } from '../common/crawler/crawler.service'
 import { response } from 'express';
 
 @Injectable()
